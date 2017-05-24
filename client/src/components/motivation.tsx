@@ -23,7 +23,7 @@ const authorMotivation = (author: string): JSX.Element => {
     );
 };
 
-class Motivation extends React.Component<PropsMotivation, any> {
+class Motivation extends React.Component<PropsMotivation, void> {
     public render() {
         let { motivation: { text, author } } = this.props;
 

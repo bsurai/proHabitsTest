@@ -13,11 +13,12 @@ const authCheck = jwt({
         rateLimit: true,
         jwksRequestsPerMinute: 5,
         // YOUR-AUTH0-DOMAIN name e.g prosper.auth0.com
-        jwksUri: "https://{YOUR-AUTH0-DOMAIN}/.well-known/jwks.json"
+        // pro-habits-test111.eu.auth0.com
+        jwksUri: "https://pro-habits-test111.eu.auth0.com/.well-known/jwks.json"
     }),
     // This is the identifier we set when we created the API
-    audience: '{YOUR-API-AUDIENCE-ATTRIBUTE}',
-    issuer: '{YOUR-AUTH0-DOMAIN}',
+    audience: 'https://pro-habits-test111.eu.auth0.com',
+    issuer: 'https://pro-habits-test111.eu.auth0.com',
     algorithms: ['RS256']
 });
 

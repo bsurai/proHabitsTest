@@ -1,4 +1,4 @@
-import { HomeState } from '../interfaces/states_interfaces';
+import { HomeState } from "../interfaces/states_interfaces";
 import { HomeAction } from "../interfaces/actions_interfaces";
 
 const defaultHomeState: HomeState = {

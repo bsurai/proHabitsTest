@@ -15,8 +15,8 @@ import reducers from "./reducers";
 import AppLayout from "./containers/layouts/layout";
 import HomePage from "./containers/pages/home_page";
 import JournalPage from "./containers/pages/journal_page";
-// import { App, Home, Foo, Bar } from "./components";
-
+// import Callback from "./containers/pages/callback";
+// import { requireAuth } from "./utils/AuthService";
 // const logo = require('./logo.svg');
 
 const reducer = combineReducers({

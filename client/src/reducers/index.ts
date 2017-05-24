@@ -4,4 +4,4 @@ import journal from "./journal_reducers";
 export default {
     home,
     journal,    
-}
+};

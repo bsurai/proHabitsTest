@@ -1,6 +1,9 @@
 import { Module } from '@nestjs/common';
+import { PagesModule } from './pages.module';
+import { CommitmentModule } from './commitment.module';
 
 @Module({
-    modules: [],
+    controllers: [],
+    modules: [PagesModule, CommitmentModule],
 })
-export class ApplicationModule {}
+export class ApplicationModule { }

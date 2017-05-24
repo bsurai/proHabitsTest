@@ -1,7 +1,6 @@
 import * as React from "react";
 import { PropsChallenge } from "../interfaces/props_interfaces";
 
-
 const headerChallenge = (date: string): JSX.Element => {
     return (
         <div className={"bp3-header"}>
@@ -39,7 +38,7 @@ const buttonChallenge = (status: number): JSX.Element => {
     }
 };
 
-class Challenge extends React.Component<PropsChallenge, any> {
+class Challenge extends React.Component<PropsChallenge, void> {
     public render() {
         let { challenge: { title, text, status }, date } = this.props;
 

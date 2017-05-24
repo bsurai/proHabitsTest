@@ -21,7 +21,7 @@ const resultsOurGrowth = (value: number, text: string): JSX.Element => {
     );
 };
 
-class OurGrowth extends React.Component<PropsOurGrowth, any> {
+class OurGrowth extends React.Component<PropsOurGrowth, void> {
     public render() {
         let { ourGrowth: {
             icomitsToday,

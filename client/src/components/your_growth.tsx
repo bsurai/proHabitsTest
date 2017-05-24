@@ -31,7 +31,7 @@ const resultsYourGrowth = (daysCompeted: number, streak: number): JSX.Element =>
     );
 };
 
-class YourGrowth extends React.Component<PropsYourGrowth, any> {
+class YourGrowth extends React.Component<PropsYourGrowth, void> {
     public render() {
         let { yourGrowth: { daysCompeted, streak } } = this.props;
 

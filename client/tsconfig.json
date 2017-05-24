@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "build/dist",
+    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "module": "commonjs",
     "target": "es5",
