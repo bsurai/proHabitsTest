@@ -1,23 +1,19 @@
 import { Component } from '@nestjs/common';
 import { HttpException } from '@nestjs/core';
+import * as PGP from 'pg-promise';
+import * as IDBQ from '../interfaces/commitments';
+import { queryTodaysChallenge } from '../pg_queries/commitments';
+import * as IS from '../../../common/interfaces/states_interfaces';
+
+const pgp = PGP();
+const db = pgp('postgres://postgres:1@localhost/proHabitsTest');
 
 @Component()
 export class CommitmentService {
-    private todaysChallenge = {
-        date: "12/21",
-        challenge: {
-            id: 1,
-            title: "Family Traditions",
-            text: "Think of a new tradition to start in the office that celebrates a win for the team. Next, get some coworkers advice and thoughts on the idea. Consider implementing the tradition after the next success.",
-            status: 0
-        },
-        motivation: {
-            author: "WINSTON CHURCHILL",
-            text: "Without tradition, art is a flock of sheep without a shepherd. Without innovation, it is a corpse."
-        }
-    };
 
-    private todaysStatistic = {
+    private db: PGP.IDatabase<any>;
+
+    private todaysStatistic: { yourGrowth: IS.YourGrowth; ourGrowth: IS.OurGrowth } = {
         yourGrowth: {
             daysCompeted: 12,
             streak: 9
@@ -31,9 +27,25 @@ export class CommitmentService {
         }
     };
 
-    async getTodaysChallenge() {
-        let data = await this.todaysChallenge;
-        return data;
+    constructor() { }
+
+    async getTodaysChallenge(user_id: number = 1): Promise<{ date: string, challenge: IS.ChallengeState; motivation: IS.MotivationState }> {
+        let queryResult: IDBQ.QueryTodaysChallenge[] = await db.query(queryTodaysChallenge, {
+            user_id
+        });
+        return {
+            date: "12/21",
+            challenge: {
+                id: queryResult[0] && queryResult[0].commitment_id,
+                title: "Family Traditions",
+                text: queryResult[0] && queryResult[0].description,
+                status: queryResult[0] && queryResult[0].status
+            },
+            motivation: {
+                author: queryResult[0] && queryResult[0].author,
+                text: queryResult[0] && queryResult[0].quote
+            }
+        };
     }
 
     async getTodaysStatistic() {

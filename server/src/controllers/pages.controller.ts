@@ -22,7 +22,7 @@ export class PagesController {
         res.status(200).send(message);
     }
 
-    @All('/*')
+    @All('*')
     async getAll404(req: Request, res: Response, next: NextFunction) {
         let message = "404 - Page not found";
         console.log(message);

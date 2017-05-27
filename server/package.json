@@ -14,14 +14,16 @@
     "@nestjs/microservices": "*",
     "@nestjs/testing": "*",
     "@nestjs/websockets": "*",
-    "body-parser":"1.17.2",
-    "cors":"2.8.3",
+    "body-parser": "1.17.2",
+    "cors": "2.8.3",
     "express": "4.15.3",
-    "express-jwt":"5.3.0",
-    "jwks-rsa":"1.1.1",
+    "express-jwt": "5.3.0",
+    "jwks-rsa": "1.1.1",
+    "pg-promise": "5.7.1",
     "redis": "^2.7.1",
     "reflect-metadata": "^0.1.10",
     "rxjs": "^5.4.0",
+    "sequelize": "3.30.4",
     "typescript": "^2.2.1"
   },
   "devDependencies": {
@@ -30,6 +32,7 @@
     "@types/express": "4.0.35",
     "@types/express-jwt": "0.0.34",
     "@types/node": "^7.0.5",
+    "@types/pg-promise": "5.4.3",
     "ts-node": "^2.1.0"
   }
 }

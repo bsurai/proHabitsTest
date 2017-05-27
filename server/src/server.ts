@@ -7,6 +7,8 @@ import * as jwks from "jwks-rsa";
 import * as cors from "cors";
 import * as bodyParser from "body-parser";
 
+import * as config from "../../common/config";
+
 const authCheck = jwt({
     secret: jwks.expressJwtSecret({
         cache: true,
@@ -27,11 +29,11 @@ const instance = express();
 
 instance.use(bodyParser.json());
 instance.use(bodyParser.urlencoded({ extended: true }));
-instance.use(cors({ origin: "http://localhost:3000" }));
+instance.use(cors({ origin: `http://${config.host}:${config.portClient}` }));
 
 const app = NestFactory.create(ApplicationModule, instance);
 
 // app.get(.....)
 // app.post(.....)
 
-app.listen(4000, () => console.log('Application is listening on port 4000.'));
+app.listen(config.portServer, () => console.log(`Application is listening on port ${config.portServer}.`));
