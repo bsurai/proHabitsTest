@@ -4,4 +4,4 @@ import journal from "./journal_actions";
 export default {
     home,
     journal,    
-}
+};

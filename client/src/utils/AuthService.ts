@@ -90,4 +90,4 @@ function getTokenExpirationDate(encodedToken: string) {
 function isTokenExpired(token: string) {
     const expirationDate: Date = getTokenExpirationDate(token) || new Date(0, 0);
     return expirationDate < new Date();
-}
+} 

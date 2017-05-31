@@ -22,20 +22,18 @@ const paragraphChallenge = (title: string, text: string): JSX.Element => {
 };
 
 const buttonChallenge = (status: number): JSX.Element => {
-    switch (status) {
-        case 1:
-            return (<a />);
-        case 2:
-            return (<a />);
-        default:
-            return (
-                <div className={"bp3-i-commit"}>
-                    <br />
-                    <br />
-                    <div className={"bp3-rectangle"} />
-                    <div className={"bp3-new-challenge-tomorr"}> New Challenge tomorrow </div>
-                </div>);
-    }
+    let title = status === 0 ? "Commit" :
+                status === 1 ? "End up commit" :
+                "New Challenge tomorrow";
+
+    return (
+        <div className={"bp3-i-commit"}>
+            <br />
+            <br />
+            <div className={"bp3-rectangle"} />
+            <div className={"bp3-new-challenge-tomorr"}> {title} </div>
+        </div>
+    );
 };
 
 class Challenge extends React.Component<PropsChallenge, void> {

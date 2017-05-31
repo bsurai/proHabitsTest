@@ -1,8 +1,14 @@
-import * as SI from "./states_interfaces";
+import * as SI from "../../../common/interfaces/states_interfaces";
+import * as AI from "../interfaces/actions_interfaces";
 
 // ***************** HOME PAGE ******************** //
+export interface HomeActionCollection {
+    [index: string]: AI.ActionCreatorSync | AI.ActionCreatorAsync;
+};
+
 export interface PropsHome {
     home: SI.HomeState;
+    actions: HomeActionCollection;
 };
 
 export interface PropsChallenge {

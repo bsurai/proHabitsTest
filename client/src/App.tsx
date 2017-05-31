@@ -5,11 +5,15 @@ import { createDevTools } from "redux-devtools";
 import LogMonitor from "redux-devtools-log-monitor";
 import DockMonitor from "redux-devtools-dock-monitor";
 
-// import ReactDOM from 'react-dom'
+import { default as immutableStateInvariant } from "redux-immutable-state-invariant";
+
 import { createStore, combineReducers } from "redux";
+import { compose, applyMiddleware } from "redux";
+import logger from "redux-logger";
 import { Provider } from "react-redux";
 import { Router, Route, Redirect, IndexRoute, browserHistory } from "react-router";
 import { syncHistoryWithStore, routerReducer } from "react-router-redux";
+import thunk from "redux-thunk";
 
 import reducers from "./reducers";
 import AppLayout from "./containers/layouts/layout";
@@ -30,9 +34,13 @@ const DevTools = createDevTools(
   </DockMonitor>
 );
 
+const middlewares = [thunk, logger, immutableStateInvariant()];
+const middlewareEnhancer = applyMiddleware(...middlewares);
+const enhancers = compose(middlewareEnhancer, DevTools.instrument());
+
 const store = createStore(
   reducer,
-  DevTools.instrument()
+  enhancers // DevTools.instrument()
 );
 const history = syncHistoryWithStore(browserHistory, store);
 
@@ -51,22 +59,6 @@ class App extends React.Component<{}, null> {
           <DevTools />
         </div>
       </Provider>
-    );
-  };
-
-  /*render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
-        </p>
-      </div>
-    );
-  }*/
-};
+); }; };
 
 export default App;

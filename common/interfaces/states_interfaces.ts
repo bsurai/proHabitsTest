@@ -11,6 +11,7 @@ export interface HomeState {
     motivation: MotivationState;
     yourGrowth: YourGrowth;
     ourGrowth: OurGrowth;
+    isFetching?: boolean;
 };
 
 export interface ChallengeState {

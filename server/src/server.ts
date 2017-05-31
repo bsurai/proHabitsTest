@@ -7,9 +7,9 @@ import * as jwks from "jwks-rsa";
 import * as cors from "cors";
 import * as bodyParser from "body-parser";
 
-import * as config from "../../common/config";
+import {HOST, PORT_CLIENT, PORT_SERVER} from "./config";
 
-const authCheck = jwt({
+/* const authCheck = jwt({
     secret: jwks.expressJwtSecret({
         cache: true,
         rateLimit: true,
@@ -22,18 +22,18 @@ const authCheck = jwt({
     audience: 'https://pro-habits-test111.eu.auth0.com',
     issuer: 'https://pro-habits-test111.eu.auth0.com',
     algorithms: ['RS256']
-});
+});*/
 
 
 const instance = express();
 
 instance.use(bodyParser.json());
 instance.use(bodyParser.urlencoded({ extended: true }));
-instance.use(cors({ origin: `http://${config.host}:${config.portClient}` }));
+instance.use(cors({ origin: `${HOST}:${PORT_CLIENT}` }));
 
 const app = NestFactory.create(ApplicationModule, instance);
 
 // app.get(.....)
 // app.post(.....)
 
-app.listen(config.portServer, () => console.log(`Application is listening on port ${config.portServer}.`));
+app.listen(PORT_SERVER, () => console.log(`Application is listening on port ${PORT_SERVER}.`));
