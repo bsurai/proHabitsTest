@@ -14,6 +14,7 @@ export interface PropsHome {
 export interface PropsChallenge {
     challenge: SI.ChallengeState;
     date: string;
+    update: () => void;
 };
 
 export interface PropsMotivation {

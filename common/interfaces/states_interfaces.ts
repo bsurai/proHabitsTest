@@ -12,6 +12,7 @@ export interface HomeState {
     yourGrowth: YourGrowth;
     ourGrowth: OurGrowth;
     isFetching?: boolean;
+    userId: number;
 };
 
 export interface ChallengeState {

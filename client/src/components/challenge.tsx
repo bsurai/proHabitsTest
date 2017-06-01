@@ -21,15 +21,26 @@ const paragraphChallenge = (title: string, text: string): JSX.Element => {
     );
 };
 
-const buttonChallenge = (status: number): JSX.Element => {
-    let title = status === 0 ? "Commit" :
-                status === 1 ? "End up commit" :
-                "New Challenge tomorrow";
+const buttonChallenge = (status: number, update: () => void): JSX.Element => {
+    let title = status === 0 ? "I Commit" :
+        status === 1 ? "Complete" :
+            "New Challenge tomorrow";
 
+    let onClick = status === 2 ? undefined : update;
+
+    let btnCollor = status === 0 ? "green" :
+        status === 1 ? "blue" :
+            "silver";
+    let style = {
+        backgroundColor: btnCollor,
+        width: 220,
+        borderRadius: 5,
+        textAlign: "center",
+        verticalAlign: "middle",
+        height: 30
+    };
     return (
-        <div className={"bp3-i-commit"}>
-            <br />
-            <br />
+        <div className={"bp3-i-commit"} onClick={onClick} style={style}>
             <div className={"bp3-rectangle"} />
             <div className={"bp3-new-challenge-tomorr"}> {title} </div>
         </div>
@@ -38,14 +49,14 @@ const buttonChallenge = (status: number): JSX.Element => {
 
 class Challenge extends React.Component<PropsChallenge, void> {
     public render() {
-        let { challenge: { title, text, status }, date } = this.props;
+        let { challenge: { title, text, status }, date, update } = this.props;
 
         return (
             <div className={"bp3-todays-challenge-layout-container"}>
                 <div className={"bp3-todays-challenge"}>
                     {headerChallenge(date)}
                     {paragraphChallenge(title, text)}
-                    {buttonChallenge(status)}
+                    {buttonChallenge(status, update)}
                 </div>
             </div>
         );

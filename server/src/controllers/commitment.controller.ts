@@ -1,61 +1,49 @@
 import { Controller, All, Get, Delete, Post, HttpStatus } from '@nestjs/common';
-import { Request, Response, NextFunction} from "express";
+import { Request, Response, NextFunction } from "express";
 import { CommitmentService } from '../services/commitment.service';
 
 @Controller("commitment")
 export class CommitmentController {
-    constructor(private commitmentService: CommitmentService) {}
+    constructor(private commitmentService: CommitmentService) { }
 
-    @Get("/todays")
-    async getTodaysCommitment(req: Request, res: Response, next: NextFunction) { 
-        let data = await this.commitmentService.getTodaysChallenge();
+    @Post("/todays")
+    async getTodaysCommitment(req: Request, res: Response, next: NextFunction) {
+        let params: { userId: number; commitmentId: number } = req.body; 
+        params.userId = 1;
+        let data = await this.commitmentService.getTodaysChallenge(params);
         res.status(200).send(data);
-        
+
         let message = "@Get(\"todays\")";
         console.log(message);
-    }
+    };
 
-    @Get("/statistic")
+    /* @Post("/statistic")
     async getTodaysStatistic(req: Request, res: Response, next: NextFunction) {
         let data = await this.commitmentService.getTodaysStatistic();
         res.status(200).send(data);
-        
+
         let message = "@Get(\"statistic\")";
         console.log(message);
-     }
+    }; */
 
-    @Post('/create')
-    async createNewCommitment(req: Request, res: Response, next: NextFunction) { 
-        let message = "@Post(\"create\")";
-        console.log(message);
-        res.status(200).send(message);
-    }
 
-    @Get('/read/:id')
-    async readCommitmentById(req: Request, res: Response, next: NextFunction) { 
-        let message = "@Get(\"/read/:id\")";
-        console.log(message);
-        res.status(200).send(message);
-    }
-
-    @Post('/update/:id')
+    @Post('/update')
     async updateNewCommitmentById(req: Request, res: Response, next: NextFunction) {
-        let message = "@Post(\"update/:id\")";
-        console.log(message);
-        res.status(200).send(message);
-     }
+        console.log("req.body=");
+        console.log(req.body);
 
-    @Delete('/delete/:id')
-    async deleteCommitmentById(req: Request, res: Response, next: NextFunction) { 
-        let message = "@Delete(\"delete/:id\")";
+        let params: { userId: number; commitmentId: number, status: number } = req.body;
+        let data = await this.commitmentService.updateCommitment(params);
+        res.status(200).send(data);
+
+        let message = "@Post(\"update\")";
         console.log(message);
-        res.status(200).send(message);
-    }
+    };
 
     @All('/*')
     async getAll404(req: Request, res: Response, next: NextFunction) {
         let message = "404 - Page not found";
         console.log(message);
         res.status(404).send(message);
-    }
+    };
 };

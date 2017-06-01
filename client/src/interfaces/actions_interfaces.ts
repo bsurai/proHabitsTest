@@ -6,6 +6,13 @@ export interface HomeAction extends Redux.Action {
     home?: SI.HomeState;
 };
 
-export type ActionCreatorSync = (params?: {}) => HomeAction;
+export interface ParamActionHome {
+    userId?: number; 
+    status?: number;
+    commitmentId?: number;
+};
 
-export type ActionCreatorAsync = () => (dispatch: Redux.Dispatch<HomeAction>) => Promise<void>;
+export type ActionCreatorSync = (params?: ParamActionHome) => HomeAction;
+
+
+export type ActionCreatorAsync = (param?: ParamActionHome) => (dispatch: Redux.Dispatch<HomeAction>) => Promise<void>;

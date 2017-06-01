@@ -1,14 +1,18 @@
 import { All, Controller, Get, Post, HttpStatus } from '@nestjs/common';
-import { Request, Response, NextFunction} from "express";
+import { Request, Response, NextFunction } from "express";
 import { HomePageService } from '../services/home_page.service';
 
 @Controller("pages")
 export class PagesController {
-    constructor(private homePageService: HomePageService) {}
-    
-    @Get("/home")
+    constructor(private homePageService: HomePageService) { }
+
+    @Post("/home")
     async getHomePageData(req: Request, res: Response, next: NextFunction) {
-        let data = await this.homePageService.getHomePage();
+        console.log("req.body=");
+        console.log(req.body);
+
+        let userId = 1;
+        let data = await this.homePageService.getHomePage({ userId, commitmentId: req.body.commitmentId });
         res.status(200).json(data);
 
         let message = "@Get(\"home\")";

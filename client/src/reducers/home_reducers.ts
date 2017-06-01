@@ -4,6 +4,7 @@ import * as ACTION_TYPES from "../constants/action_types";
 
 const defaultHomeState: HomeState = {
     date: "--/--",
+    userId: 0,
     challenge: {
         id: 0,
         title: "___________",

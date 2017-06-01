@@ -8,6 +8,12 @@ import * as IS from '../../../common/interfaces/states_interfaces';
 const pgp = PGP();
 const db = pgp('postgres://postgres:1@localhost/proHabitsTest');
 
+interface ParamsCommitment {
+    userId: number;
+    commitmentId: number;
+    status?: number;
+};
+
 @Component()
 export class CommitmentService {
 
@@ -29,12 +35,14 @@ export class CommitmentService {
 
     constructor() { }
 
-    async getTodaysChallenge(user_id: number = 1): Promise<{ date: string, challenge: IS.ChallengeState; motivation: IS.MotivationState }> {
+    async getTodaysChallenge({ userId, commitmentId }): Promise<{ date: string, userId: number, challenge: IS.ChallengeState; motivation: IS.MotivationState }> {
+        console.log("userId="+userId);
         let queryResult: IDBQ.QueryTodaysChallenge[] = await db.query(queryTodaysChallenge, {
-            user_id
+            user_id: userId
         });
         return {
             date: "12/21",
+            userId,
             challenge: {
                 id: queryResult[0] && queryResult[0].commitment_id,
                 title: "Family Traditions",
@@ -46,10 +54,21 @@ export class CommitmentService {
                 text: queryResult[0] && queryResult[0].quote
             }
         };
-    }
+    };
 
-    async getTodaysStatistic() {
+    async getTodaysStatistic({ userId, commitmentId }) {
         let data = await this.todaysStatistic;
         return data;
+    };
+
+    async updateCommitment({ userId, commitmentId, status }: ParamsCommitment): Promise<IS.HomeState> {
+        let data = await this.getAllData({ userId, commitmentId});
+        return data;
+    };
+
+    async getAllData(params): Promise<IS.HomeState> {
+        let todaysChallenge = await this.getTodaysChallenge(params);
+        let todaysStatistic = await this.getTodaysStatistic(params);
+        return Object.assign({}, todaysChallenge, todaysStatistic);
     }
 };

@@ -26,12 +26,31 @@ function mapDispatchToPropsReposPage(dispatch: Redux.Dispatch<AI.HomeAction>) {
 class HomePage extends React.Component<PropsHome, void> {
 
     private timerId: number;
+    private userId: number;
+    private status: number;
+    private commitmentId: number;
+
+    componentWillReceiveProps(nextProps: PropsHome) {
+        this.commitmentId = nextProps.home.challenge.id;
+        this.status = nextProps.home.challenge.status;
+        this.userId = nextProps.home.userId;
+    };
+
+    updateStatus = () => {
+        console.log("updateStatus this");
+        console.log(this);
+        this.props.actions.updateHomePage({
+            userId: this.userId,
+            commitmentId: this.commitmentId,
+            status: ++this.status
+        });
+    }
 
     componentDidMount() {
-        this.props.actions.fetchHomePage();
+        this.props.actions.fetchHomePage({ userId: this.userId, commitmentId: this.commitmentId });
         this.timerId = window.setInterval(
-            () => { this.props.actions.fetchHomePage(); },
-            60 * 1000
+            () => { this.props.actions.fetchHomePage({ userId: this.userId, commitmentId: this.commitmentId }); },
+            60 * 1000,
         );
     };
 
@@ -39,13 +58,16 @@ class HomePage extends React.Component<PropsHome, void> {
         window.clearInterval(this.timerId);
     };
 
-    public render() {
+    render() {
         let { home: { challenge, date, motivation, yourGrowth, ourGrowth } } = this.props;
         let userIsLoged = true; // isLoggedIn();
         return (
             <div>
                 <h1>Home Page!</h1>
-                {userIsLoged ? <Challenge challenge={challenge} date={date} /> : ""}
+                {userIsLoged ? (
+                    <Challenge challenge={challenge}
+                        date={date}
+                        update={this.updateStatus} />) : ""}
                 {userIsLoged ? <Motivation motivation={motivation} /> : ""}
                 {userIsLoged ? <YourGrowth yourGrowth={yourGrowth} /> : ""}
                 {userIsLoged ? <OurGrowth ourGrowth={ourGrowth} /> : ""}

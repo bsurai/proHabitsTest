@@ -1,5 +1,5 @@
-import * as isofetch from "isomorphic-fetch";
-// import * as Redux from "redux";
+import * as fetch from "isomorphic-fetch";
+import * as Redux from "redux";
 import * as ACTION_TYPES from "../constants/action_types";
 import * as AI from "../interfaces/actions_interfaces";
 import * as SI from "../../../common/interfaces/states_interfaces";
@@ -23,39 +23,57 @@ const fetchError: AI.ActionCreatorSync = () => {
     return { type: ACTION_TYPES.FETCH_HOMEPAGE_ERROR };
 };
 
-const fetchHomePage: AI.ActionCreatorAsync = () => {
-    return (dispatch) => {
-        let options = {
-            method: "GET",
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-                "Cache": "no-cache"
-            } // ,
-            // credentials
-        };
+const sendRequest = (url: string, dispatch: Redux.Dispatch<AI.HomeAction>, opt = {}): Promise<void> => {
+    let defaultOptions = {
+        method: "POST",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Cache": "no-cache"
+        } // ,
+        // credentials
+    };
 
-        dispatch(fetchBegin());
-        return isofetch(`${HOST}:${PORT_SERVER}/pages/home`, options)
-            .then(response => {
-                if (response.status >= 400) {
-                    dispatch(fetchError());
-                    return;
-                }
-                return response.json();
-            })
-            .then(json => {
-                if (!json) { return; };
-                dispatch(fetchSuccess(json));
-            })
-            .catch(error => {
+    let options = Object.assign(defaultOptions, opt);
+    dispatch(fetchBegin());
+    console.log(options);
+    console.log(url);
+    return fetch(url, options)
+        .then(response => {
+            if (response.status >= 400) {
                 dispatch(fetchError());
-            });
+                return;
+            }
+            return response.json();
+        })
+        .then(json => {
+            if (!json) { return; };
+            dispatch(fetchSuccess(json));
+        })
+        .catch(error => {
+            dispatch(fetchError());
+        });
+};
+
+const fetchHomePage: AI.ActionCreatorAsync = ({ userId, commitmentId }: AI.ParamActionHome) => {
+    return (dispatch) => {
+        let body = { userId, commitmentId };
+        let options = { body: JSON.stringify(body) };
+        return sendRequest(`${HOST}:${PORT_SERVER}/pages/home`, dispatch, options);
+    };
+};
+
+const updateHomePage: AI.ActionCreatorAsync = ({ userId, commitmentId, status }: AI.ParamActionHome) => {
+    return (dispatch) => {
+        let body = { userId, commitmentId, status };
+        let options = { body: JSON.stringify(body) };
+        return sendRequest(`${HOST}:${PORT_SERVER}/commitment/update`, dispatch, options);
     };
 };
 
 export default {
     fetchHomePage,
+    updateHomePage,
     // fetchBegin,
     // fetchSuccess,
     // fetchError
