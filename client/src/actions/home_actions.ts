@@ -59,7 +59,7 @@ const fetchHomePage: AI.ActionCreatorAsync = ({ userId, commitmentId }: AI.Param
     return (dispatch) => {
         let body = { userId, commitmentId };
         let options = { body: JSON.stringify(body) };
-        return sendRequest(`${HOST}:${PORT_SERVER}/pages/home`, dispatch, options);
+        return sendRequest(`${HOST}:${PORT_SERVER}/user/home`, dispatch, options);
     };
 };
 
@@ -67,14 +67,11 @@ const updateHomePage: AI.ActionCreatorAsync = ({ userId, commitmentId, status }:
     return (dispatch) => {
         let body = { userId, commitmentId, status };
         let options = { body: JSON.stringify(body) };
-        return sendRequest(`${HOST}:${PORT_SERVER}/commitment/update`, dispatch, options);
+        return sendRequest(`${HOST}:${PORT_SERVER}/user/commit`, dispatch, options);
     };
 };
 
 export default {
     fetchHomePage,
     updateHomePage,
-    // fetchBegin,
-    // fetchSuccess,
-    // fetchError
 };

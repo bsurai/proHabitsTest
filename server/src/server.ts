@@ -1,7 +1,7 @@
-import { NestFactory } from '@nestjs/core';
-import { ApplicationModule } from './modules/app.module';
+import { NestFactory } from "@nestjs/core";
+import { ApplicationModule } from "./modules/app.module";
 
-import * as express from 'express';
+import * as express from "express";
 import * as jwt from "express-jwt";
 import * as jwks from "jwks-rsa";
 import * as cors from "cors";
@@ -32,8 +32,5 @@ instance.use(bodyParser.urlencoded({ extended: true }));
 instance.use(cors({ origin: `${HOST}:${PORT_CLIENT}` }));
 
 const app = NestFactory.create(ApplicationModule, instance);
-
-// app.get(.....)
-// app.post(.....)
 
 app.listen(PORT_SERVER, () => console.log(`Application is listening on port ${PORT_SERVER}.`));

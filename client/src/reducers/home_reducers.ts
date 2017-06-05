@@ -9,7 +9,7 @@ const defaultHomeState: HomeState = {
         id: 0,
         title: "___________",
         text: "___________",
-        status: 0
+        status: -1
     },
     motivation: {
         author: "________ ________",

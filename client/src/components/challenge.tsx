@@ -22,6 +22,10 @@ const paragraphChallenge = (title: string, text: string): JSX.Element => {
 };
 
 const buttonChallenge = (status: number, update: () => void): JSX.Element => {
+    if (status === -1) {
+        return <div/>;
+    };
+
     let title = status === 0 ? "I Commit" :
         status === 1 ? "Complete" :
             "New Challenge tomorrow";
@@ -29,7 +33,7 @@ const buttonChallenge = (status: number, update: () => void): JSX.Element => {
     let onClick = status === 2 ? undefined : update;
 
     let btnCollor = status === 0 ? "green" :
-        status === 1 ? "blue" :
+        status === 1 ? "aqua" :
             "silver";
     let style = {
         backgroundColor: btnCollor,

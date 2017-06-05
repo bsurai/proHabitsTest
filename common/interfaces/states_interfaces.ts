@@ -1,7 +1,7 @@
 export interface AppState {
     home: HomeState;
     journal?: any;
-};
+}
 
 // **************  HOME PAGE  *************** //
 
@@ -13,14 +13,14 @@ export interface HomeState {
     ourGrowth: OurGrowth;
     isFetching?: boolean;
     userId: number;
-};
+}
 
 export interface ChallengeState {
     id: number;
     title: string;
     text: string;
     status: number;
-};
+}
 
 export interface MotivationState {
     text: string;
@@ -30,7 +30,7 @@ export interface MotivationState {
 export interface YourGrowth {
     daysCompeted: number;
     streak: number;
-};
+}
 
 export interface OurGrowth {
     icomitsToday: number;
@@ -38,4 +38,4 @@ export interface OurGrowth {
     prohabitCowokers: number;
     peopleFiveDateStreak: number;
     peopleFinishedThisProhabit: number;
-};
+}
