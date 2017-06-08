@@ -37,8 +37,6 @@ class HomePage extends React.Component<PropsHome, void> {
     };
 
     updateStatus = () => {
-        console.log("updateStatus this");
-        console.log(this);
         this.props.actions.updateHomePage({
             userId: this.userId,
             commitmentId: this.commitmentId,

@@ -15,4 +15,4 @@ export interface ParamActionHome {
 export type ActionCreatorSync = (params?: ParamActionHome) => HomeAction;
 
 
-export type ActionCreatorAsync = (param?: ParamActionHome) => (dispatch: Redux.Dispatch<HomeAction>) => Promise<void>;
+export type ActionCreatorAsync = (param?: ParamActionHome) => (dispatch: Redux.Dispatch<HomeAction>) => Promise<void>|undefined;

@@ -9,6 +9,8 @@ export class UserController {
 
     @Post("user/home")
     async getHomePageData(req: Request, res: Response, next: NextFunction) {
+        console.log("req.body =");
+        console.log(req.body);
         let userId = 1;
         let data = await this.userService.getHomePage({ userId, commitmentId: req.body.commitmentId });
         res.status(200).json(data);
@@ -16,6 +18,8 @@ export class UserController {
 
     @Post("user/commit")
     async getJournalPageData(req: Request, res: Response, next: NextFunction) {
+        console.log("req.body =");
+        console.log(req.body);
         let params: IS.ParamsCommitment = req.body;
         let data = await this.userService.updateCommitment(params);
         res.status(200).send(data);

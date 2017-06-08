@@ -11,6 +11,10 @@ export interface PropsHome {
     actions: HomeActionCollection;
 };
 
+export interface PropsLayout {
+    actions: HomeActionCollection;
+};
+
 export interface PropsChallenge {
     challenge: SI.ChallengeState;
     date: string;

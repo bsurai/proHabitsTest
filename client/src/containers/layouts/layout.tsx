@@ -1,14 +1,29 @@
 import * as React from "react";
+import * as Redux from "redux";
 import { Link } from "react-router";
 import { logout, login, isLoggedIn } from "../../utils/AuthService";
-/*let foo = () => ( console.log("") );
-let logout = foo;
-let login = foo;
-let isLoggedIn = foo;*/
+import homeActions from "../../actions/home_actions";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { PropsLayout } from "../../interfaces/props_interfaces";
+import { HomeActionCollection } from "../../interfaces/props_interfaces";
+import * as AI from "../../interfaces/actions_interfaces";
 
-class AppLayout extends React.Component<void, void> {
+function mapDispatchToPropsReposPage(dispatch: Redux.Dispatch<AI.HomeAction>) {
+    return {
+        actions: bindActionCreators<HomeActionCollection>(homeActions, dispatch),
+    };
+};
+
+class AppLayout extends React.Component<PropsLayout, void> {
+
+    appLogout = () => {
+        logout();
+        this.props.actions.setDefaultState();
+    }
+
     public render() {
-        let userIsLoged = true; // isLoggedIn();
+        let userIsLoged = isLoggedIn();
         return (
             <div className="container">
                 <div className="navbar">
@@ -16,8 +31,8 @@ class AppLayout extends React.Component<void, void> {
                     {userIsLoged ? <Link id="link_to_journal" className="link_to" to="/journal">Journal</Link> : ""}
                     <ul className="nav navbar-nav navbar-right">
                         <li>{
-                            isLoggedIn() ?
-                                <button className="btn btn-danger log" onClick={() => logout()}>Log out </button> :
+                            userIsLoged ?
+                                <button className="btn btn-danger log" onClick={this.appLogout}>Log out </button> :
                                 <button className="btn btn-info log" onClick={() => login()}>Log In</button>
                         }</li>
                     </ul>
@@ -31,4 +46,5 @@ class AppLayout extends React.Component<void, void> {
     }
 };
 
-export default AppLayout;
+// export default AppLayout;
+export default connect(undefined, mapDispatchToPropsReposPage)(AppLayout);

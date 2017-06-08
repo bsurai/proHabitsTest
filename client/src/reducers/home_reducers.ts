@@ -36,6 +36,8 @@ export default (prevState: HomeState = defaultHomeState, action: HomeAction): Ho
             return Object.assign({}, prevState, action.home, {isFetching: false});
         case ACTION_TYPES.FETCH_HOMEPAGE_ERROR:
             return Object.assign({}, prevState, {isFetching: false});
+        case ACTION_TYPES.SET_DEFAULT_STATE:
+            return Object.assign({}, defaultHomeState);    
         default:
             return prevState;
     }

@@ -19,7 +19,8 @@ import reducers from "./reducers";
 import AppLayout from "./containers/layouts/layout";
 import HomePage from "./containers/pages/home_page";
 import JournalPage from "./containers/pages/journal_page";
-// import Callback from "./containers/pages/callback";
+import Callback from "./containers/pages/callback";
+import NotFoundPage from "./containers/pages/not_found_page";
 // import { requireAuth } from "./utils/AuthService";
 // const logo = require('./logo.svg');
 
@@ -40,7 +41,7 @@ const enhancers = compose(middlewareEnhancer, DevTools.instrument());
 
 const store = createStore(
   reducer,
-  enhancers // DevTools.instrument()
+  enhancers
 );
 const history = syncHistoryWithStore(browserHistory, store);
 
@@ -53,6 +54,8 @@ class App extends React.Component<{}, null> {
             <Route path="/" component={AppLayout}>
               <IndexRoute component={HomePage} />
               <Route path="/journal" component={JournalPage} />
+              <Route path="/callback" component={Callback} />
+              <Route path="/404" component={NotFoundPage} />
               <Redirect from="*" to="/404" />
             </Route>
           </Router>

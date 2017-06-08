@@ -7,29 +7,36 @@ import * as jwks from "jwks-rsa";
 import * as cors from "cors";
 import * as bodyParser from "body-parser";
 
-import {HOST, PORT_CLIENT, PORT_SERVER} from "./config";
+import { HOST, PORT_CLIENT, PORT_SERVER } from "./config";
 
-/* const authCheck = jwt({
+const jwtCheck = jwt({
     secret: jwks.expressJwtSecret({
         cache: true,
         rateLimit: true,
         jwksRequestsPerMinute: 5,
-        // YOUR-AUTH0-DOMAIN name e.g prosper.auth0.com
-        // pro-habits-test111.eu.auth0.com
         jwksUri: "https://pro-habits-test111.eu.auth0.com/.well-known/jwks.json"
     }),
-    // This is the identifier we set when we created the API
-    audience: 'https://pro-habits-test111.eu.auth0.com',
-    issuer: 'https://pro-habits-test111.eu.auth0.com',
-    algorithms: ['RS256']
-});*/
+    audience: "pro-habits-test111-11.eu.auth0.com",
+    issuer: "https://pro-habits-test111.eu.auth0.com/",
+    algorithms: ["RS256"]
+});
 
 
 const instance = express();
 
+instance.use(cors({ origin: `${HOST}:${PORT_CLIENT}` }));
 instance.use(bodyParser.json());
 instance.use(bodyParser.urlencoded({ extended: true }));
-instance.use(cors({ origin: `${HOST}:${PORT_CLIENT}` }));
+instance.use(jwtCheck, function (req: express.Request, res: express.Response, next: express.NextFunction) {
+    // console.log("req.user=");
+    // console.log(req.user);
+    next();
+    /* if (!req.user) {
+        // return res.sendStatus(401);
+    }
+    res.sendStatus(200);*/
+});
+
 
 const app = NestFactory.create(ApplicationModule, instance);
 
