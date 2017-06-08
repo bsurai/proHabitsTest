@@ -25,20 +25,18 @@ export class UserService {
         }
     };
 
-    // constructor() { }
-
     async getHomePage(params: IS.ParamsCommitment): Promise<IS.HomeState> {
         let data = await this.getAllData(params);
         return data;
     }
 
-    async getTodaysChallenge({ userId, commitmentId }: IS.ParamsCommitment): Promise<IS.TodaysChallenge> {
+    async getTodaysChallenge(params: IS.ParamsCommitment): Promise<IS.TodaysChallenge> {
         let queryResult: OSM.SelectCommits[] = await db.query(selectTodaysChallenge, {
-            user_id: userId
+            user_name: params.userName
         });
         if (queryResult[0] && !queryResult[0].is_todays) {
             await db.query(insertTodaysChallenge, {
-                user_id: userId,
+                user_id: queryResult[0].user_id,
                 commitment_id: queryResult[0].commitment_id,
                 duration_days: queryResult[0].duration_days
             });
@@ -46,7 +44,7 @@ export class UserService {
 
         return {
             date: "12/21",
-            userId,
+            userId: queryResult[0] && queryResult[0].user_id,
             challenge: {
                 id: queryResult[0] && queryResult[0].commitment_id,
                 title: "Family Traditions",
@@ -65,13 +63,13 @@ export class UserService {
         return data;
     }
 
-    async updateCommitment({ userId, commitmentId, status }: IS.ParamsCommitment): Promise<IS.HomeState> {
+    async updateCommitment(params: IS.ParamsCommitment): Promise<IS.HomeState> {
         await db.query(updateTodaysChallenge, {
-            user_id: userId,
-            commitment_id: commitmentId,
-            status: status
+            user_id: params.userId,
+            commitment_id: params.commitmentId,
+            status: params.status
         });
-        let data = await this.getAllData({ userId, commitmentId });
+        let data = await this.getAllData(params);
         return data;
     }
 

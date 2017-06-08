@@ -74,6 +74,6 @@ class Challenge extends React.Component<PropsChallenge, void> {
             </div>
         );
     }
-};
+}
 
 export default Challenge;

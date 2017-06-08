@@ -9,19 +9,13 @@ export class UserController {
 
     @Post("user/home")
     async getHomePageData(req: Request, res: Response, next: NextFunction) {
-        console.log("req.body =");
-        console.log(req.body);
-        let userId = 1;
-        let data = await this.userService.getHomePage({ userId, commitmentId: req.body.commitmentId });
+        let data = await this.userService.getHomePage(req.body);
         res.status(200).json(data);
     }
 
     @Post("user/commit")
     async getJournalPageData(req: Request, res: Response, next: NextFunction) {
-        console.log("req.body =");
-        console.log(req.body);
-        let params: IS.ParamsCommitment = req.body;
-        let data = await this.userService.updateCommitment(params);
+        let data = await this.userService.updateCommitment(req.body);
         res.status(200).send(data);
     }
 

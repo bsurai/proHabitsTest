@@ -2,6 +2,7 @@ export { HomeState } from "../../../common/interfaces/states_interfaces";
 import * as IS from "../../../common/interfaces/states_interfaces";
 
 export interface ParamsCommitment {
+    userName: string;
     userId: number;
     commitmentId: number;
     status?: number;

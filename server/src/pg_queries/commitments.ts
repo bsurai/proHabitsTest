@@ -9,12 +9,14 @@ export const selectTodaysChallenge = `SELECT
   users_activity.status,
   true as is_todays,
   0 as ordering
-FROM 
+FROM
+  users, 
   public.users_activity, 
   public.commitments, 
   public.quotes
 WHERE
-  users_activity.user_id=$/user_id/ AND
+  users.name=$/user_name/ AND
+  users.id = users_activity.user_id AND
   users_activity.commitment_id = commitments.id AND
   commitments.quote_id = quotes.id AND 
   users_activity.status < 2 AND
@@ -33,21 +35,25 @@ SELECT
   0,
   false,
   1+random()
-FROM 
+FROM
+  users,
   public.users_commitments, 
   public.commitments, 
   public.quotes
 WHERE 
-  users_commitments.user_id=$/user_id/ AND
+  users.name=$/user_name/ AND
+  users.id = users_commitments.user_id AND
   users_commitments.commitment_id = commitments.id AND
   commitments.quote_id = quotes.id AND
   users_commitments.commitment_id NOT IN
   (SELECT 
 	   users_activity.commitment_id
-	 FROM 
+	 FROM
+	   public.users, 
 	   public.users_activity
 	 WHERE
-	   users_activity.user_id=1 AND
+	   users.name=$/user_name/ AND
+	   users.id = users_activity.user_id AND
 	   users_activity.day = CURRENT_DATE
    )
 
@@ -65,11 +71,13 @@ SELECT
   true as is_todays,
   3 as ordering
 FROM 
+  users,
   public.users_activity, 
   public.commitments, 
   public.quotes
 WHERE
-  users_activity.user_id=$/user_id/ AND
+  users.name=$/user_name/ AND
+  users.id = users_activity.user_id AND
   users_activity.commitment_id = commitments.id AND
   commitments.quote_id = quotes.id AND 
   users_activity.status = 2 AND

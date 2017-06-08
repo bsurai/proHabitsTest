@@ -49,8 +49,7 @@ const sendReq = (url: string, dispatch: Redux.Dispatch<AI.HomeAction>, body = {}
     let _body = Object.assign({}, body, { userName: getUserNickname() });
     let options = Object.assign(defaultOptions, { body: JSON.stringify(_body) });
     dispatch(fetchBegin());
-    console.log(options);
-    console.log(url);
+    
     return fetch(url, options)
         .then(response => {
 
@@ -65,7 +64,7 @@ const sendReq = (url: string, dispatch: Redux.Dispatch<AI.HomeAction>, body = {}
             return response.json();
         })
         .then(json => {
-            if (!json) { return; };
+            if (!json) { return; }
             dispatch(fetchSuccess(json));
         })
         .catch(error => {

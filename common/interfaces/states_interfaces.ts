@@ -1,6 +1,6 @@
 export interface AppState {
     home: HomeState;
-    journal?: any;
+    journal?: {};
 }
 
 // **************  HOME PAGE  *************** //
