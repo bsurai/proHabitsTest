@@ -1,3 +1,17 @@
+# Used stack
+## Front end:
+[create-react-app-typescript](https://github.com/wmonk/create-react-app-typescript) starter kit.
+
+[React.js + Auth0](https://auth0.com/blog/reactjs-authentication-tutorial/) tutorial.
+
+## Back end:
+[Nest](https://github.com/kamilmysliwiec/nest) -  Web framework for Node.js, which built on Express.js, TypeScript and combines concepts of both OOP (Object Oriented Progamming) and FP (Functional Programming).
+
+[PostgreSQL](https://www.tutorialspoint.com/postgresql/) with [pg-promise](https://www.npmjs.com/package/pg-promise).
+
+[schemats](https://github.com/sweetiq/schemats) allows you generate TypeScript interface definitions from (Postgres, MySQL) SQL database schema automatically.
+
+
 # Installation and start
 
 You should install packages and start app separately on client and server.
